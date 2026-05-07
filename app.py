@@ -15,8 +15,11 @@ if query:
     
     with st.spinner('Recherche des meilleures recettes...'):
         try:
+
             with DDGS() as ddgs:
-                results = [r for r in ddgs.text(search_query, max_results=8)]
+                # On ajoute 'region="wt-wt"' pour éviter les soucis de localisation serveur
+                search_results = ddgs.text(search_query, region="wt-wt", safesearch="moderate", max_results=8)
+                results = [r for r in search_results]
             
             if not results:
                 st.warning("Aucun résultat trouvé.")
